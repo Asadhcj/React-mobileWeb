@@ -10,4 +10,7 @@ axios.interceptors.response.use(function (response) {
     // 对响应错误做点什么
     return Promise.reject(error);
   });
+  // 获取轮播图、推荐商品
 export const Getgoods=()=>axios.get("/site/goods/gettopdata/goods")
+// 获取商品分类列表
+export const getGoodsgroup=()=>axios.get("/site/goods/getgoodsgroup")
