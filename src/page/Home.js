@@ -1,6 +1,7 @@
 import { Carousel, WingBlank } from 'antd-mobile';
 import  React,{Fragment} from "react";
-import {Getgoods,getGoodsgroup}  from "../api"
+import {Getgoods,getGoodsgroup}  from "../api";
+import { withRouter } from "react-router-dom";
 class Home extends React.Component {
     state = {
       data: [],
@@ -18,7 +19,6 @@ class Home extends React.Component {
             }
         });
         getGoodsgroup().then(res=>{
-            console.log(res)
             if(res.status===0){
               this.setState({
                 Goodsgroup:res.message,
@@ -29,6 +29,7 @@ class Home extends React.Component {
     }
     render() {
       return (
+       
         <Fragment>
             <WingBlank>
               <Carousel
@@ -39,8 +40,9 @@ class Home extends React.Component {
                 {this.state.data.map(val => (
                   <a
                     key={val.id}        
-                    href='javascript:;' 
+                    href="javascript:;"
                     style={{ display: 'inline-block', width: '100%', }}
+                    onClick={()=>this.props.history.push("/goosdetails/"+val.id)}
                   >
                     <img
                       src={val.img_url}
@@ -63,7 +65,9 @@ class Home extends React.Component {
                 {this.state.RecommendDatas.map(e=>{
                   return(
                     <Fragment key={e.id}>
-                      <a href="javascript:;" className="Recommend_goodslist">
+                      <a href="javascrip:;"
+                      className="Recommend_goodslist" 
+                      onClick={()=>this.props.history.push("/goosdetails/"+e.id)}>
                       <div className="Recommend_imgbox" >
                         <img className="Recommend_img" src={e.img_url} alt=""/>
                       </div>
@@ -117,7 +121,10 @@ class Home extends React.Component {
                 <div className="Goodsgroup_catetitle" >{e.catetitle}</div>
                 <div className="Goodsgroup_content">
                   {e.datas.map(val=>
-                  <a href="javascript:;" className="Goodsgroup_content_list" key={val.artID}>
+                  <a href="javascrip:;"
+                  className="Goodsgroup_content_list" 
+                  onClick={()=>this.props.history.push("/goosdetails/"+val.artID)}
+                  key={val.artID}>
                       <div className="Goodsgroup_content_imgbox">
                         <img src={val.img_url} alt="" className="Goodsgroup_content_img"/>
                       </div>
@@ -179,4 +186,4 @@ class Home extends React.Component {
     }
   }
   
-export default  Home;
+export default withRouter(Home) ;

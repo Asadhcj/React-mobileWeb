@@ -14,3 +14,5 @@ axios.interceptors.response.use(function (response) {
 export const Getgoods=()=>axios.get("/site/goods/gettopdata/goods")
 // 获取商品分类列表
 export const getGoodsgroup=()=>axios.get("/site/goods/getgoodsgroup")
+// 获取商品详情信息
+export const getGoodsinfo=(id)=>axios.get("/site/goods/getgoodsinfo/"+id)
