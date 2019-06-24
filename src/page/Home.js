@@ -2,6 +2,7 @@ import { Carousel, WingBlank } from 'antd-mobile';
 import  React,{Fragment} from "react";
 import {Getgoods,getGoodsgroup}  from "../api";
 import { withRouter } from "react-router-dom";
+
 class Home extends React.Component {
     state = {
       data: [],
@@ -185,5 +186,5 @@ class Home extends React.Component {
       );
     }
   }
-  
+ 
 export default withRouter(Home) ;

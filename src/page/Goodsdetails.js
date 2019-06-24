@@ -1,8 +1,8 @@
 import React ,{Component,Fragment} from "react";
-import { NavBar, Icon } from 'antd-mobile';
-import { Carousel, WingBlank } from 'antd-mobile';
+import { NavBar, Icon , Carousel, WingBlank } from 'antd-mobile';
 import {getGoodsinfo} from "../api";
 import {connect} from "react-redux";
+import {addGoodsInfo} from "../createaction/createAction"
 class GoodsDetails extends Component{
     state = {
         data: [],
@@ -15,7 +15,6 @@ class GoodsDetails extends Component{
         
         let {id}=this.props.match.params
         getGoodsinfo(id).then(res=>{ 
-            console.log(res)
             let {add_time}=res.message.goodsinfo
                 add_time=add_time.replace("T"," ").slice(0,-5)
                 res.message.goodsinfo.add_time=add_time
@@ -111,12 +110,12 @@ class GoodsDetails extends Component{
                         <span className="iconfont icon-kefu"></span>
                         <span>客服</span>
                     </div>
-                    <div className="shopping_cart">
+                    <div className="shopping_cart" onClick={()=>this.props.history.push("/cart")}>
                         <span className="iconfont icon-gouwuche"></span>
                         <span>购物车</span>
                         <span className="tip" style={{display:this.props.cartnum===0?"none":"block"}}>{this.props.cartnum}</span>
                     </div>
-                    <div className="addCart">
+                    <div className="addCart" onClick={()=>this.props.addCart(this.state.goodsinfo)}>
                         加入购物车
                     </div>
                     <div className="nowBuy">
@@ -196,6 +195,16 @@ const mapStateTopprops=(state)=>{
     return {
         cartnum:state.cartNum.cartnums.length
     }
+};
+const mapDispatchprops=(dispatch)=>{
+    return {
+        addCart:(newGoods)=>{
+            newGoods.num=1;
+            newGoods.ischecked=false
+            dispatch(addGoodsInfo(newGoods))
+        }
+    }
 }
-export default connect(mapStateTopprops,null)(GoodsDetails);
+
+export default connect(mapStateTopprops,mapDispatchprops)(GoodsDetails);
 
